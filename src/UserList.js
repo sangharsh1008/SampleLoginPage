@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
 
-
-
-
 const styleObj = {
     border: '1px solid black',
     width: '200px',

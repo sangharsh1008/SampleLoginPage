@@ -1,0 +1,40 @@
+.alert {
+  background-color: rgb(245, 121, 121);
+  margin: auto;
+}
+.wow-enter {
+  opacity: 0;
+}
+.wow-enter-active {
+  opacity: 1;
+  transition: all 500ms;
+}
+.btn-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+}
+
+.quantity-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+}
+.quantity-wrapper label {
+  margin-right: 10px;
+}
+.quantity-wrapper button {
+  margin: 0 3px;
+}
+
+.tab-content {
+  background: #fdfdfd;
+  line-height: 25px;
+  border: 1px solid lightgray;
+  border-top: 5px solid #e74c3c;
+  border-bottom: 5px solid #e74c3c;
+  padding: 30px 25px;
+  height: 300px;
+}

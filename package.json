@@ -4,24 +4,27 @@
   "private": true,
   "main": "src/App.js",
   "dependencies": {
-    "@createjs/easeljs": "^2.0.0-beta.4",
-    "availity-reactstrap-validation": "^2.6.1",
-    "bootstrap": "^4.4.1",
-    "http-server": "^0.12.0",
-    "lodash": "^4.17.15",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "react-router-dom": "^5.1.2",
-    "react-scripts": "3.2.0",
-    "react-select": "^3.0.8",
-    "reactstrap": "^8.1.1",
-    "screenshot-desktop": "^1.10.0"
+    "availity-reactstrap-validation": "^2.7.0",
+    "axios": "^0.21.1",
+    "bootstrap": "^4.6.0",
+    "mime": "^1.6.0",
+    "node-sass": "^5.0.0",
+    "react": "^17.0.1",
+    "react-bootstrap": "^1.5.0",
+    "react-dom": "^17.0.1",
+    "react-redux": "^7.2.2",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.2",
+    "react-transition-group": "^4.4.1",
+    "reactstrap": "^8.9.0",
+    "redux": "^4.0.5",
+    "styled-components": "^5.2.1",
+    "web-vitals": "^1.0.1"
   },
   "scripts": {
     "start": "set BROWSER=none&&set PORT=3536 && react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "electron": "electron ."
+    "test": "react-scripts test"
   },
   "eslintConfig": {
     "extends": "react-app"

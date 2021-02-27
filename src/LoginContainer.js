@@ -1,52 +1,50 @@
 import React, { Component } from "react";
-import "../../App.css";
-import { validateAndGetUser} from "../../utils/loginUtils";
+import { validateAndGetUser} from "./loginUtils";
 import { AvForm, AvField } from "availity-reactstrap-validation";
-import StylePage, { StyledButton } from "app/common/component/StylePage";
-import { Header } from "app/common/component/Header";
-
-import {UserListComponent} from './components/UserList'
-import {ProductListComponent} from './components/ProductList'
-
-
+import StylePage, { StyledButton } from "./app/common/component/StylePage";
+import { Header } from "./app/common/component/Header";
+import {UserListComponent} from './UserList'
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./styles.css";
+import { connect } from 'react-redux';
 
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: false,
+      email: 'john@gmail.com',
       name: "",
-      password: "",
+      password: "m38rmF$",
       userList:[],
       isAdminUser:false,
       isNormalUser:false,
       productList:[]
     };
   }
-  
+
   handleValidSubmit = (event, values) => {
+    const { email = 'john@gmail.com',password='m38rmF$'} = values;
     event.preventDefault();
     this.setState(
       {
-        name: values.email,
-        password: values.password
+        name: email,
+        password: password
       },
       () => {
-        validateAndGetUser({email:values.email,password:values.password},(data)=>{
+        console.log('data')
+        validateAndGetUser({email:email,password:password},(data)=>{
           if(data.isAdminUser){
           this.setState({
             userList:data,
             isAdminUser:true
           })
         }else if(data.isProduct){
-          console.log(data)
-          
+          this.props.dispatch({ type:'userLoggedIn',payload:{isUserLogged:true}})
+
           this.setState({
             productList:data,
             isNormalUser:true
           })
+          console.log(data);
         }
         })
       }
@@ -59,40 +57,20 @@ class Login extends Component {
     console.log(`Login failed`);
   };
 
-  convertBtoa = () => {
-    const { name, password } = this.state;
-    console.log(name, "name", password, "password");
-    const string = `${name}:${password}`;
-
-    const utf8Bytes = encodeURIComponent(string).replace(
-      /%([0-9A-F]{2})/g,
-      function(match, p1) {
-        return String.fromCharCode("0x" + p1);
-      }
-    );
-    return btoa(utf8Bytes);
-  };
-
-diaplayUserList(){
-  const { userList,productList } = this.state;
-console.log(userList)
-  return(<div style>{userList[0].email}</div>)
-}
-
   render() {
     const { isAdminUser,userList,isNormalUser } = this.state;
+    // if(this.props.userLoggedIn){
+    //   this.props.dispatch({ type:'userLoggedIn',payload:{isUserLogged:false}})
+    // }
+    console.log(this.props,this.state);
 
-if(isAdminUser){
-  return <div><UserListComponent UserList={userList} toggle={()=>{
-    this.setState({
-  isNormalUser: false
-})}}/></div>
-} else if(isNormalUser){
-  return <div><ProductListComponent ProductList={this.state.productList} toggle={()=>{
-    this.setState({
-  isNormalUser: false
-})}}/></div>
-
+    if(isAdminUser){
+      return <div><UserListComponent UserList={userList} toggle={()=>{
+        this.setState({
+      isNormalUser: false
+    })}}/></div>
+    } else if(isNormalUser){
+      return <div>Hello {this.state.email.split('@')[0]}</div>
 }else{
     return (
       <StylePage
@@ -143,6 +121,7 @@ if(isAdminUser){
                     required: true,
                     email: true
                   }}
+                  value="john@gmail.com"
                 />
               </div>
             </div>
@@ -173,27 +152,7 @@ if(isAdminUser){
                   placeholder="Password"
                   className="form-control"
                   type="password"
-                  validate={{
-                    // required: {
-                    //   value: true,
-                    //   errorMessage: "Please enter your password"
-                    // },
-                    // pattern: {
-                    //   value: "^[A-Za-z0-9]+$",
-                    //   errorMessage:
-                    //     "Your password must be composed only with letter and numbers"
-                    // },
-                    // minLength: {
-                    //   value: 6,
-                    //   errorMessage:
-                    //     "Your password must be between 6 and 16 characters"
-                    // },
-                    // maxLength: {
-                    //   value: 50,
-                    //   errorMessage:
-                    //     "Your password must be between 6 and 16 characters"
-                    // }
-                  }}
+                  value="m38rmF$"
                 />
               </div>
             </div>
@@ -213,4 +172,10 @@ if(isAdminUser){
   }
 }
 }
-export default Login;
+function stateToProps(state) {
+  console.log(state);
+  return {
+    userLoggedIn:state.reducer.isUserLogged
+  };
+}
+export default connect(stateToProps)(Login);
